@@ -1,0 +1,46 @@
+<style>
+    /* Result Box Styling */
+.result-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Centered Box Styling */
+.url-box {
+    background-color: #f8f9fa; /* Light background color */
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 600px; /* Max width to avoid being too wide */
+    width: 100%; /* Full width within the container */
+}
+</style>
+
+<div class="container mt-5">
+    <div class="container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/" style="color: #007bff;"><i class="fa fa-home" style="margin-right: 5px; color: #007bff;"></i>Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">shortened Url</li>
+            </ol>
+        </nav>
+    </div>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h2 style="font-weight: bolder;">Shortened URL</h2>
+                <div class="custom-line"></div>
+            </div>
+        </div>
+    
+        <!-- Centered Box for Result -->
+        <div class="result-box text-center mt-5">
+            <div class="url-box">
+                <h3>Here is your shortened URL:</h3>
+                <input type="text" id="shortenedUrl" class="form-control mb-3" value="https://short.ly/abc123" readonly>
+                <button id="copyButton" class="btn btn-primary">Copy URL</button>
+            </div>
+        </div>
+    </div>
+</div>
