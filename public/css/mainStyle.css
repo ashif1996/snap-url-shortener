@@ -4,18 +4,17 @@ body, html {
     display: flex;
     flex-direction: column;
 }
-a {
-    text-decoration: none;
-}
+
 main {
     flex: 1;
 }
-footer {
-    padding: 20px;
-    background-color: #f8f9fa;
+
+a {
+    text-decoration: none;
 }
+
 .error-border {
-    border: 2px solid red !important;
+    border: 1px solid red !important;
 }
 .error-message {
     color: red;
@@ -375,4 +374,21 @@ input[type="url"]:focus {
     background-color: #007bff;
     margin: 10px auto;
     border-radius: 10px;
+}
+
+.result-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;  /* Ensure it spans full width */
+    padding: 20px;
+}
+
+.url-box {
+    background-color: #f8f9fa;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    width: 100%;
 }

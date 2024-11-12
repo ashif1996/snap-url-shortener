@@ -1,5 +1,6 @@
 const Url = require('../models/urlModel');
 const generateShortenedUrl = require('../utils/urlShortener.js');
+const sendEmail = require('../utils/emailUtils');
 
 const getHome = (req, res) => {
     const locals = { title: "Home | SnapURL!" };
@@ -31,6 +32,8 @@ const shortenUrl = async (req, res) => {
     try {
         const existingUrl = await Url.findOne({ originalUrl });
         if (existingUrl) {
+            req.session.shortenedUrl = existingUrl.shortenedUrl;
+
             return res.status(200).json({
                 success: true,
                 message: 'The URL you provided is already shortened. Click OK button to see the shortened URL.',
@@ -49,6 +52,8 @@ const shortenUrl = async (req, res) => {
 
         await newShortenedUrl.save();
 
+        req.session.shortenedUrl = shortenedUrl;
+
         return res.status(201).json({
             success: true,
             message: 'URL successfully shortened. Click OK button to see the shortened URL.',
@@ -64,17 +69,60 @@ const shortenUrl = async (req, res) => {
 };
 
 const getShortenedUrl = (req, res) => {
-    const locals = { title: "Shortened Url | SnapURL!" };
+    const shortenedUrl = req.session.shortenedUrl;
+
+    const locals = {
+        title: "Shortened Url | SnapURL!",
+        shortenedUrl: shortenedUrl ? shortenedUrl : null,
+    };
+
     return res.render("result", {
         locals,
         layout: "layout/mainLayout",
     });
 };
 
+const redirectToOriginalUrl = async (req, res) => {
+    const { shortId } = req.params;
+
+    try {
+        const shortenedurl = await Url.findOne({ shortenedUrl: `${req.protocol}://${req.get('host')}/${shortId}` });
+
+        if (shortenedurl) {
+            return res.redirect(shortenedurl.originalUrl);
+        }
+    } catch (error) {
+        console.error('Error during URL redirection:', error);
+        return res.status(500).send('Server error. Please try again.');
+    }
+};
+
+const processSendEmail = async (req, res) => {
+    const { name, email, message } = req.body;
+
+    try {
+        await sendEmail(name, email, message);
+
+        return res.json({
+            success: true,
+            message: "Email sent successfully!",
+        })
+    } catch (error) {
+        console.error("Failed to send email:", error);
+
+        return res.status(500).json({
+            success: false,
+            message: 'Failed to send email.',
+        });
+    }
+};
+
 module.exports ={
     getHome,
-    shortenUrl,
     getAbout,
     getContact,
+    shortenUrl,
     getShortenedUrl,
+    redirectToOriginalUrl,
+    processSendEmail,
 };

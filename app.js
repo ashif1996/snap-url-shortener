@@ -1,15 +1,23 @@
 require('dotenv').config();
 
-const connectToDatabase = require('./config/db');
+const connectToDatabase = require('./config/dbConfig');
 connectToDatabase();
 
 const express = require('express');
 const path = require('path');
+const session = require('express-session');
 const nocache = require('nocache');
 const expressLayouts = require('express-ejs-layouts');
 const flash = require('connect-flash');
 
 const app = express();
+
+app.use(session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: true,
+    cookie:{ secure: false },
+}));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
