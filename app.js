@@ -1,5 +1,8 @@
 require('dotenv').config();
 
+const connectToDatabase = require('./config/db');
+connectToDatabase();
+
 const express = require('express');
 const path = require('path');
 const nocache = require('nocache');

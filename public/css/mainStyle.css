@@ -14,6 +14,12 @@ footer {
     padding: 20px;
     background-color: #f8f9fa;
 }
+.error-border {
+    border: 2px solid red !important;
+}
+.error-message {
+    color: red;
+}
 .gradient-navbar {
     background: linear-gradient(to right, #3a4d75, #0066b3);
 }

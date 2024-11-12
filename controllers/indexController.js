@@ -1,3 +1,5 @@
+const Url = require('../models/urlModel');
+
 const getHome = (req, res) => {
     const locals = { title: "Home | SnapURL!" };
     return res.render("index", {
@@ -5,6 +7,10 @@ const getHome = (req, res) => {
         layout: "layout/mainLayout",
     });
 };
+
+const shortenUrl = async (req, res) => {
+
+}
 
 const getAbout = (req, res) => {
     const locals = { title: "About Us | SnapURL!" };

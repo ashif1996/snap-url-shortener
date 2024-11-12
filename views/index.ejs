@@ -3,20 +3,16 @@
         <div class="card-header">
             <h2 class="form-title">Shorten Your URL</h2>
         </div>
-        <!-- URL Shortening Form -->
         <div class="card-body">
             <form id="urlForm">
-                <!-- Small heading above the input field -->
                 <h6 class="form-subtitle">Paste the URL to be shortened</h6>
                 <div class="form-group">
-                    <input type="url" class="form-control" id="urlInput" placeholder="Enter your URL here" required>
+                    <input type="url" class="form-control" name="originalUrl" id="urlInput" placeholder="Enter your URL here">
+                    <span id="urlInputError" class="error-message"></span>
                 </div>
                 <button type="submit" class="btn-custom">Shorten URL</button>
-                <!-- Improved description text -->
                 <p class="description-text">SnapURL! is a free tool for creating short, easy-to-share links from long URLs. Simplify your sharing!</p>
             </form>
-            <!-- Success or Error Message -->
-            <div id="formMessage" class="form-message"></div>
         </div>
     </div>
 </div>
