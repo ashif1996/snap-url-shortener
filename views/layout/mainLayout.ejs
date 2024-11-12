@@ -18,61 +18,18 @@
       <div class="loader"></div>
     </div>
 
-    <nav class="navbar navbar-expand-lg gradient-navbar">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="/">SnapURL!</a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto">
-              <li class="nav-item me-3">
-                <a class="nav-link" href="/contact">Contact Us</a>
-              </li>
-              <li class="nav-item me-3">
-                <a class="nav-link" href="/about">About Us</a>
-              </li>
-            </ul>
-          </div>
-        </div>
-    </nav>
+    <%- include('../partials/header') %>
 
     <main>
       <%- body %>
     </main>
 
-    <footer class="text-white pt-3 pb-3 bg-gradient-overlay gradient-background">
-        <div class="container">
-            <div class="row d-flex align-items-center">
-                <div class="col-md-6 text-center text-md-start">
-                    <p>&copy; <script>document.write(new Date().getFullYear());</script> SnapURL!. All rights reserved.</p>
-                </div>
-                <div class="col-md-6 text-center text-md-end">
-                    <a href="https://www.facebook.com/" class="btn-floating btn-sm text-white" style="font-size:25px;">
-                        <i class="bi bi-facebook"></i>
-                    </a>
-                    <a href="https://twitter.com" class="btn-floating btn-sm text-white" style="font-size:25px;">
-                        <i class="bi bi-twitter"></i>
-                    </a>
-                    <a href="https://www.instagram.com/" class="btn-floating btn-sm text-white" style="font-size:25px;">
-                        <i class="bi bi-instagram"></i>
-                    </a>
-                    <a href="https://telegram.org/" class="btn-floating btn-sm text-white" style="font-size:25px;">
-                        <i class="bi bi-telegram"></i>
-                    </a>
-                    <a href="https://www.youtube.com/" class="btn-floating btn-sm text-white" style="font-size:25px;">
-                        <i class="bi bi-youtube"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
-      </footer>      
+    <%- include('../partials/footer') %>      
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="/js/loader.js"></script>
-    <script src="/js/urlForm.js"></script>
 </body>
 </html>

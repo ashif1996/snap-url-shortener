@@ -1,22 +1,3 @@
-<style>
-    /* Result Box Styling */
-.result-box {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-/* Centered Box Styling */
-.url-box {
-    background-color: #f8f9fa; /* Light background color */
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    max-width: 600px; /* Max width to avoid being too wide */
-    width: 100%; /* Full width within the container */
-}
-</style>
-
 <div class="container mt-5">
     <div class="container">
         <nav aria-label="breadcrumb">
@@ -34,13 +15,25 @@
             </div>
         </div>
     
-        <!-- Centered Box for Result -->
-        <div class="result-box text-center mt-5">
-            <div class="url-box">
-                <h3>Here is your shortened URL:</h3>
-                <input type="text" id="shortenedUrl" class="form-control mb-3" value="https://short.ly/abc123" readonly>
-                <button id="copyButton" class="btn btn-primary">Copy URL</button>
+        <% if (locals.shortenedUrl) { %>
+            <div class="result-box text-center mt-5">
+                <div class="url-box">
+                    <h3>Here is your shortened URL:</h3>
+                    <input type="text" id="shortenedUrl" class="form-control mb-3" value="<%= locals.shortenedUrl %>" readonly>
+                    <span id="successMessage" class="success-message mb-3" style="display: none;"></span>
+                    <button id="copyButton" class="btn btn-primary">Copy URL</button>
+                </div>
             </div>
-        </div>
+        <% } else { %>
+            <div class="result-box text-center mt-5">
+                <div class="url-box">
+                    <h3>Error: No shortened URL found!</h3>
+                    <p>The URL you are looking for could not be found. Please try generating a new URL.</p>
+                    <a href="/" class="btn btn-primary">Go Back to Home</a>
+                </div>
+            </div>
+        <% } %>
     </div>
 </div>
+
+<script src="/js/result.js"></script>
