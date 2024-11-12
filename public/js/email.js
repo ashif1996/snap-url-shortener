@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         if (inputElement) {
-            inputElement.classList.add('error-border');  // Add red border to input
+            inputElement.classList.add('error-border');
         }
     };
 
@@ -34,27 +34,52 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
-    const validateUrlForm = () => {
-        const url = document.getElementById('urlInput').value.trim();
-        const urlPattern = /^(https?:\/\/)?([a-zA-Z0-9.-]+)\.([a-zA-Z]{2,})(\/\S*)?$/;
+    const isValidName = (name) => {
+        const regex = /^[A-Za-z\s]+$/;
+        return regex.test(name);
+    };
+
+    const isValidEmail = (email) => {
+        const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        return regex.test(email);
+    };
+
+    const validateContactForm = () => {
+        const messageName = document.getElementById('messageName');
+        const messageEmail = document.getElementById('messageEmail');
+        const messageContent = document.getElementById('messageContent');
+
+        let isValid = true;
 
         clearErrors();
 
-        if (!url) {
-            displayErrors('urlInput', "URL is required.");
-            return false;
+        if (!messageName.value.trim()) {
+            displayErrors('messageName', 'Name is required.');
+            isValid = false;
+        } else if (!isValidName(messageName.value.trim())) {
+            displayErrors('messageName', 'Name should not contain numbers.');
+            isValid = false;
         }
 
-        if (!urlPattern.test(url)) {
-            displayErrors('urlInput', "Please enter a valid URL.");
-            return false;
+        // Validate email
+        if (!messageEmail.value.trim()) {
+            displayErrors('messageEmail', 'Email is required.');
+            isValid = false;
+        } else if (!isValidEmail(messageEmail.value.trim())) {
+            displayErrors('messageEmail', 'Please enter a valid email address.');
+            isValid = false;
         }
 
-        return true;
+        // Validate message
+        if (!messageContent.value.trim()) {
+            displayErrors('messageContent', 'Message is required.');
+            isValid = false;
+        }
 
+        return isValid;
     };
 
-    const handleFormSubmit = async (form, endpoint, method, successRedirectUrl) => {
+    const handleFormSubmit = async (form, endpoint, method) => {
         const formData = new FormData(form);
         const jsonData = JSON.stringify(Object.fromEntries(formData.entries()));
 
@@ -68,7 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 },
                 body: jsonData,
             });
-            
+
             const data = await response.json();
             hideLoader();
 
@@ -78,7 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     title: 'Success',
                     text: data.message,
                 }).then(() => {
-                    window.location.href = successRedirectUrl;
+                    window.location.reload();
                 });
             } else {
                 Swal.fire({
@@ -98,15 +123,16 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    const urlForm = document.getElementById('urlForm');
-    if (urlForm) {
-        urlForm.addEventListener('submit', (event) => {
+    const contactForm = document.getElementById('contactForm');
+    if (contactForm) {
+        contactForm.addEventListener('submit', (event) => {
             event.preventDefault();
-    
-            const isValidUrlForm = validateUrlForm();
-            if (isValidUrlForm) {
-                handleFormSubmit(urlForm, '/shorten-url', 'POST', '/shortened-url');
+
+            const isValidContactForm = validateContactForm();
+            if (isValidContactForm) {
+                handleFormSubmit(contactForm, '/contact/send-email', 'POST');
             }
         });
     }
+
 });
