@@ -3,10 +3,7 @@ body, html {
     margin: 0;
     display: flex;
     flex-direction: column;
-}
-
-main {
-    flex: 1;
+    overflow-y: scroll;
 }
 
 a {

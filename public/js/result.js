@@ -8,13 +8,19 @@ document.addEventListener('DOMContentLoaded', () => {
             try {
                 await navigator.clipboard.writeText(shortenedUrlInput.value);
                 
-                successMessage.textContent = 'URL copied to clipboard!';
-                successMessage.style.display = 'block';
-                successMessage.style.color = 'green';
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success',
+                    text: 'URL copied to clipboard!',
+                });
+                
             } catch (error) {
-                successMessage.textContent = 'Failed to copy URL.';
-                successMessage.style.display = 'block';
-                successMessage.style.color = 'red';
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Failed to copy URL.',
+                });
+                
             }
         });
     }

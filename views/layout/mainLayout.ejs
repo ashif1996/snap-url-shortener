@@ -12,19 +12,23 @@
     <link rel="icon" href="/images/main/logo1.png" type="image/x-icon">
     <title><%= locals.title %></title>
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100">
     <!-- Loader HTML -->
     <div id="loader" class="loader-wrapper">
       <div class="loader"></div>
     </div>
 
-    <%- include('../partials/header') %>
+    <header>
+      <%- include('../partials/header') %>
+    </header>
 
-    <main>
+    <main class="flex-grow-1">
       <%- body %>
     </main>
 
-    <%- include('../partials/footer') %>      
+    <footer class="bg-light mt-auto">
+      <%- include('../partials/footer') %>
+    </footer>      
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
