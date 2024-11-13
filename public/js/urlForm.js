@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         if (inputElement) {
-            inputElement.classList.add('error-border');  // Add red border to input
+            inputElement.classList.add('error-border');
         }
     };
 

@@ -61,7 +61,6 @@ document.addEventListener('DOMContentLoaded', () => {
             isValid = false;
         }
 
-        // Validate email
         if (!messageEmail.value.trim()) {
             displayErrors('messageEmail', 'Email is required.');
             isValid = false;
@@ -70,7 +69,6 @@ document.addEventListener('DOMContentLoaded', () => {
             isValid = false;
         }
 
-        // Validate message
         if (!messageContent.value.trim()) {
             displayErrors('messageContent', 'Message is required.');
             isValid = false;
@@ -134,5 +132,4 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
-
 });

@@ -1,7 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     const shortenedUrlInput = document.getElementById('shortenedUrl');
     const copyButton = document.getElementById('copyButton');
-    const successMessage = document.getElementById('successMessage');
 
     if (copyButton) {
         copyButton.addEventListener('click', async () => {
