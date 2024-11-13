@@ -1,10 +1,11 @@
 const Url = require('../models/urlModel');
+const HttpStatusCodes = require('../utils/httpStatusCodes.js');
 const generateShortenedUrl = require('../utils/urlShortener.js');
 const sendEmail = require('../utils/emailUtils');
 
 const getHome = (req, res) => {
     const locals = { title: "Home | SnapURL!" };
-    return res.render("index", {
+    return res.status(HttpStatusCodes.OK).render("index", {
         locals,
         layout: "layout/mainLayout",
     });
@@ -12,7 +13,7 @@ const getHome = (req, res) => {
 
 const getAbout = (req, res) => {
     const locals = { title: "About Us | SnapURL!" };
-    return res.render("about", {
+    return res.status(HttpStatusCodes.OK).render("about", {
         locals,
         layout: "layout/mainLayout",
     });
@@ -20,7 +21,7 @@ const getAbout = (req, res) => {
 
 const getContact = (req, res) => {
     const locals = { title: "Contact Us | SnapURL!" };
-    return res.render("contact", {
+    return res.status(HttpStatusCodes.OK).render("contact", {
         locals,
         layout: "layout/mainLayout",
     });
@@ -34,7 +35,7 @@ const shortenUrl = async (req, res) => {
         if (existingUrl) {
             req.session.shortenedUrl = existingUrl.shortenedUrl;
 
-            return res.status(200).json({
+            return res.status(HttpStatusCodes.OK).json({
                 success: true,
                 message: 'The URL you provided is already shortened. Click OK button to see the shortened URL.',
                 shortenedUrl: existingUrl.shortenedUrl,
@@ -54,14 +55,14 @@ const shortenUrl = async (req, res) => {
 
         req.session.shortenedUrl = shortenedUrl;
 
-        return res.status(201).json({
+        return res.status(HttpStatusCodes.CREATED).json({
             success: true,
             message: 'URL successfully shortened. Click OK button to see the shortened URL.',
             shortenedUrl,
         });
     } catch (error) {
         console.error('Error shortening the URL:', error);
-        return res.status(500).json({
+        return res.status(HttpStatusCodes.INTERNAL_SERVER_ERROR).json({
             success: false,
             message: 'Internal server error. Please try again later.',
         });
@@ -76,7 +77,7 @@ const getShortenedUrl = (req, res) => {
         shortenedUrl: shortenedUrl ? shortenedUrl : null,
     };
 
-    return res.render("result", {
+    return res.status(HttpStatusCodes.OK).render("result", {
         locals,
         layout: "layout/mainLayout",
     });
@@ -89,11 +90,11 @@ const redirectToOriginalUrl = async (req, res) => {
         const shortenedurl = await Url.findOne({ shortenedUrl: `${req.protocol}://${req.get('host')}/${shortId}` });
 
         if (shortenedurl) {
-            return res.redirect(shortenedurl.originalUrl);
+            return res.redirect(HttpStatusCodes.MOVED_PERMANENTLY, shortenedurl.originalUrl);
         }
     } catch (error) {
         console.error('Error during URL redirection:', error);
-        return res.status(500).send('Server error. Please try again.');
+        return res.status(HttpStatusCodes.INTERNAL_SERVER_ERROR).send('Server error. Please try again.');
     }
 };
 
@@ -103,14 +104,14 @@ const processSendEmail = async (req, res) => {
     try {
         await sendEmail(name, email, message);
 
-        return res.json({
+        return res.status(HttpStatusCodes.OK).json({
             success: true,
             message: "Email sent successfully!",
         })
     } catch (error) {
         console.error("Failed to send email:", error);
 
-        return res.status(500).json({
+        return res.status(HttpStatusCodes.INTERNAL_SERVER_ERROR).json({
             success: false,
             message: 'Failed to send email.',
         });
