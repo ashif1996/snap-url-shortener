@@ -1,7 +1,10 @@
+// Load environment variables
 require('dotenv').config();
 
+// Connect to the database
 const connectToDatabase = require('./config/dbConfig');
 connectToDatabase();
+
 
 const express = require('express');
 const path = require('path');
@@ -12,27 +15,27 @@ const flash = require('connect-flash');
 
 const app = express();
 
+// Middlewares
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
-    cookie:{ secure: false },
+    cookie: { secure: false },
 }));
-
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 app.use(flash());
-
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(expressLayouts);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
-app.use(expressLayouts);
-
-app.use(express.static(path.join(__dirname, 'public')));
 app.use(nocache());
 
+// Routes
 const indexRoutes = require('./routes/indexRoutes');
 app.use('/', indexRoutes);
 
+// Error Handlers (404, 500)
 app.use((req, res, next) => {
     const locals = { title: "404 | Page Not Found" };
     return res.status(404).render("404", {
@@ -43,7 +46,6 @@ app.use((req, res, next) => {
 
 app.use((err, req, res, next) => {
     console.error(err.stack);
-
     const locals = { title: "500 | Internal Server Error" };
     return res.status(500).render('internalError', {
         locals,
@@ -51,6 +53,7 @@ app.use((err, req, res, next) => {
     });
 });
 
+// Server Setup
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}...`);
