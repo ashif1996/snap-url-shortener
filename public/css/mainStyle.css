@@ -15,16 +15,15 @@ a {
 .error-message {
     color: red;
 }
+
 .gradient-navbar {
     background: linear-gradient(to right, #3a4d75, #0066b3);
 }
-
 .gradient-navbar .nav-link, .gradient-navbar .navbar-brand {
     color: white;
 }
-
 .gradient-navbar .nav-link:hover {
-    color: #ddd; /* Light grey for hover effect */
+    color: #ddd;
 }
 
 .bg-gradient-overlay {
@@ -43,16 +42,14 @@ a {
     opacity: 0.85;
 }
 
-/* Increase the font size and font weight for the navbar brand (SnapURL) */
-.navbar-brand {
-    font-size: 30px;    /* Adjust the size as needed */
-    font-weight: bold;  /* Increase the font weight */
-}
 
-/* Increase the font size and font weight for the list items (li tags) */
+.navbar-brand {
+    font-size: 30px;
+    font-weight: bold;
+}
 .navbar-nav .nav-item .nav-link {
-    font-size: 15px;    /* Adjust the size as needed */
-    font-weight: 600;   /* Adjust font weight */
+    font-size: 15px;
+    font-weight: 600;
 }
 
 .about-section {
@@ -60,7 +57,6 @@ a {
     color: #333;
     padding: 60px 0;
 }
-
 .about-content {
     max-width: 800px;
     margin: auto;
@@ -73,7 +69,6 @@ a {
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
-
 .team-card-header {
     background-color: #007bff;
     color: #fff;
@@ -81,18 +76,15 @@ a {
     padding: 20px;
     text-align: center;
 }
-
 .team-card-body {
     padding: 20px;
     text-align: center;
 }
-
 .team-member-info h5 {
     font-size: 18px;
     font-weight: 600;
     margin-bottom: 5px;
 }
-
 .team-member-info p {
     color: #555;
     font-size: 14px;
@@ -104,7 +96,6 @@ a {
     margin: 0 10px;
     transition: all 0.3s;
 }
-
 .social-icons a:hover {
     color: #7c4dff;
 }
@@ -117,36 +108,29 @@ a {
     padding: 30px;
     background-color: #007bff;
 }
-
 .contact-info h4 {
     font-size: 24px;
     font-weight: bold;
     margin-bottom: 20px;
 }
-
 .contact-info p {
     font-size: 18px;
     color: #333;
 }
-
 .contact-info p i {
     margin-right: 10px;
 }
-
 .contact-info p + p {
     margin-top: 15px;
 }
-
 .contact-info .social-icons {
     margin-top: 20px;
 }
-
 .contact-info .social-icons a {
     font-size: 24px;
     margin: 0 15px;
     transition: all 0.3s;
 }
-
 .contact-info .social-icons a:hover {
     color: #7c4dff;
 }
@@ -163,13 +147,11 @@ a {
     margin-left: auto;
     margin-right: auto;
 }
-
 .description-box h3 {
     font-size: 26px;
     font-weight: bold;
     margin-bottom: 20px;
 }
-
 .description-box p {
     font-size: 18px;
     color: #555;
@@ -209,7 +191,6 @@ a {
     font-size: 24px;
     font-weight: 600;
 }
-
 .form-group {
     margin-bottom: 20px;
 }
@@ -230,7 +211,6 @@ input[type="url"] {
     color: #333;
     transition: border-color 0.3s ease;
 }
-
 input[type="url"]:focus {
     border-color: #7c4dff;
     outline: none;
@@ -249,7 +229,6 @@ input[type="url"]:focus {
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
-
 .btn-custom:hover {
     background-color: #0056b3;
 }
@@ -259,21 +238,19 @@ input[type="url"]:focus {
     font-size: 16px;
     margin-top: 20px;
 }
-
 .form-message.success {
     color: #28a745;
 }
-
 .form-message.error {
     color: #dc3545;
 }
-
 .form-subtitle {
     font-size: 14px;
     color: #555;
     margin-bottom: 10px;
     text-align: center;
 }
+
 .description-text {
     font-size: 14px;
     color: #666;
@@ -291,13 +268,11 @@ input[type="url"]:focus {
     font-weight: bold;
     margin-top: 20px;
 }
-
 .contact-btn:hover {
     background-color: transparent;
     color: #007bff;
     border-color: #007bff;
 }
-
 .dento-contact-area .contact-btn:hover {
     border-color: #007bff;
 }
@@ -376,7 +351,7 @@ input[type="url"]:focus {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 100%;  /* Ensure it spans full width */
+    width: 100%;
     padding: 20px;
 }
 
