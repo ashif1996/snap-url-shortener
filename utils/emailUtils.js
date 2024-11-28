@@ -1,6 +1,7 @@
 const transporter = require('../config/emailConfig');
 
-const SendEmail = (name, email, message) => {
+// Function to send an email using the contact form data
+const sendEmail = async (name, email, message) => {
     const mailOptions = {
         from: process.env.SEND_EMAIL,
         to: "faithfuldebates@gmail.com",
@@ -25,7 +26,12 @@ SnapURL Notification System
         replyTo: email,
     };
 
-    return transporter.sendMail(mailOptions);
+    try {
+        const info = await transporter.sendMail(mailOptions);
+        return info;
+    } catch (error) {
+        console.error("Email sending failed:", error);
+    }
 };
 
-module.exports = SendEmail;
+module.exports = sendEmail;

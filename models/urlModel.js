@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+// Schema for storing URL data
 const urlSchema = new Schema({
     originalUrl: {
         type: String,
@@ -20,6 +21,9 @@ const urlSchema = new Schema({
         type: Date,
     },
 });
+
+urlSchema.index({ originalUrl: 1 });
+urlSchema.index({ shortenUrl: 1 });
 
 const Url = mongoose.model('Url', urlSchema);
 

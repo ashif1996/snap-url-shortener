@@ -1,3 +1,4 @@
+// Define and export an object containing HTTP status codes
 const HttpStatusCodes = {
     OK: 200,
     CREATED: 201,

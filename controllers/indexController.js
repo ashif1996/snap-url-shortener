@@ -1,8 +1,12 @@
+// Model
 const Url = require('../models/urlModel');
+
+// Helpers
 const HttpStatusCodes = require('../utils/httpStatusCodes.js');
 const generateShortenedUrl = require('../utils/urlShortener.js');
 const sendEmail = require('../utils/emailUtils');
 
+// Renders the home page
 const getHome = (req, res) => {
     const locals = { title: "Home | SnapURL!" };
     return res.status(HttpStatusCodes.OK).render("index", {
@@ -11,6 +15,7 @@ const getHome = (req, res) => {
     });
 };
 
+// Renders the about page
 const getAbout = (req, res) => {
     const locals = { title: "About Us | SnapURL!" };
     return res.status(HttpStatusCodes.OK).render("about", {
@@ -19,6 +24,7 @@ const getAbout = (req, res) => {
     });
 };
 
+// Renders the contact page
 const getContact = (req, res) => {
     const locals = { title: "Contact Us | SnapURL!" };
     return res.status(HttpStatusCodes.OK).render("contact", {
@@ -27,13 +33,19 @@ const getContact = (req, res) => {
     });
 };
 
+// Shortens the provided URL and saves it in the database
 const shortenUrl = async (req, res) => {
     const { originalUrl } = req.body;
 
     try {
-        const existingUrl = await Url.findOne({ originalUrl });
+        const existingUrl = await Url.findOne({ originalUrl })
+            .select("originalUrl shortenedUrl")
+            .lean();
+
         if (existingUrl) {
-            req.session.shortenedUrl = existingUrl.shortenedUrl;
+            if (req.session.shortenedUrl !== existingUrl.shortenedUrl) {
+                req.session.shortenedUrl = existingUrl.shortenedUrl;
+            }
 
             return res.status(HttpStatusCodes.OK).json({
                 success: true,
@@ -62,6 +74,7 @@ const shortenUrl = async (req, res) => {
         });
     } catch (error) {
         console.error('Error shortening the URL:', error);
+
         return res.status(HttpStatusCodes.INTERNAL_SERVER_ERROR).json({
             success: false,
             message: 'Internal server error. Please try again later.',
@@ -69,6 +82,7 @@ const shortenUrl = async (req, res) => {
     }
 };
 
+// Renders the shortened URL result page
 const getShortenedUrl = (req, res) => {
     const shortenedUrl = req.session.shortenedUrl;
 
@@ -83,21 +97,25 @@ const getShortenedUrl = (req, res) => {
     });
 };
 
+// Redirects to the original URL based on the shortened URL ID
 const redirectToOriginalUrl = async (req, res) => {
     const { shortId } = req.params;
 
     try {
-        const shortenedurl = await Url.findOne({ shortenedUrl: `${req.protocol}://${req.get('host')}/${shortId}` });
+        const shortenedurl = await Url.findOne({ shortenedUrl: `${req.protocol}://${req.get('host')}/${shortId}` })
+            .select("originalUrl")
+            .lean();
 
         if (shortenedurl) {
             return res.redirect(HttpStatusCodes.MOVED_PERMANENTLY, shortenedurl.originalUrl);
         }
     } catch (error) {
         console.error('Error during URL redirection:', error);
-        return res.status(HttpStatusCodes.INTERNAL_SERVER_ERROR).send('Server error. Please try again.');
+        throw new Error("An error occured during URL redirection");
     }
 };
 
+// Handles sending an email through the contact form
 const processSendEmail = async (req, res) => {
     const { name, email, message } = req.body;
 

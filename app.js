@@ -5,9 +5,8 @@ require('dotenv').config();
 const connectToDatabase = require('./config/dbConfig');
 connectToDatabase();
 
-
-const express = require('express');
 const path = require('path');
+const express = require('express');
 const session = require('express-session');
 const nocache = require('nocache');
 const expressLayouts = require('express-ejs-layouts');
@@ -56,7 +55,7 @@ app.use((err, req, res, next) => {
 // Server Setup
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}...`);
+    console.log(`Server is running on port ${PORT}`);
 });
 
 module.exports = app;
