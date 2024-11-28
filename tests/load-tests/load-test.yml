@@ -1,0 +1,9 @@
+config:
+  target: 'http://localhost:3000' # Replace with your app's URL
+  phases:
+    - duration: 60              # Test for 60 seconds
+      arrivalRate: 20           # 20 requests per second
+scenarios:
+  - flow:
+      - get:
+          url: "/"
