@@ -323,7 +323,7 @@ input[type="url"]:focus {
 .contact-information {
     position: relative;
     padding: 30px 50px;
-    background-color: #007bff;
+    background: linear-gradient(45deg, #0056b3, #007bff);
     border-radius: 3px;
     color: #fff;
 }
