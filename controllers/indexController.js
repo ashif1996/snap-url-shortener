@@ -1,3 +1,6 @@
+// Rate limit
+const rateLimit = require("express-rate-limit");
+
 // Model
 const Url = require('../models/urlModel');
 
@@ -115,6 +118,13 @@ const redirectToOriginalUrl = async (req, res) => {
     }
 };
 
+// Rate limiting to prevent abuse of the contact form
+const emailLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000,
+    max: 5,
+    message: "Too many requests from this IP, please try again later.",
+});
+
 // Handles sending an email through the contact form
 const processSendEmail = async (req, res) => {
     const { name, email, message } = req.body;
@@ -144,4 +154,5 @@ module.exports ={
     getShortenedUrl,
     redirectToOriginalUrl,
     processSendEmail,
+    emailLimiter,
 };
