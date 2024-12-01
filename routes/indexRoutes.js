@@ -11,6 +11,6 @@ router.post('/shorten-url', indexController.shortenUrl);
 router.get('/shortened-url', indexController.getShortenedUrl);
 router.get('/:shortId', indexController.redirectToOriginalUrl);
 
-router.post('/contact/send-email', indexController.processSendEmail);
+router.post('/contact/send-email', indexController.emailLimiter, indexController.processSendEmail);
 
 module.exports = router;
