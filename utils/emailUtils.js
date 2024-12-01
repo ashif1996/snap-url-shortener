@@ -1,10 +1,10 @@
 const transporter = require('../config/emailConfig');
 
-// Function to send an email using the contact form data
+// Function to send an email using the contact form
 const sendEmail = async (name, email, message) => {
     const mailOptions = {
         from: process.env.SEND_EMAIL,
-        to: "faithfuldebates@gmail.com",
+        to: process.env.SEND_EMAIL,
         subject: "📬 New Message from SnapURL Contact Form",
         text: `
 Hello,
