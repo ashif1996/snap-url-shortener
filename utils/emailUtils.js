@@ -5,11 +5,11 @@ const sendEmail = async (name, email, message) => {
     const mailOptions = {
         from: process.env.SEND_EMAIL,
         to: process.env.SEND_EMAIL,
-        subject: "📬 New Message from SnapURL Contact Form",
+        subject: "📬 New Message from SnapURL! Contact Form",
         text: `
 Hello,
 
-You have received a new message through the SnapURL Contact Us form:
+You have received a new message through the SnapURL! Contact Us form:
 
 ----------------------------------------------------
 👤 Name: ${name}  
@@ -21,7 +21,7 @@ ${message}
 ----------------------------------------------------
 
 Best regards,
-SnapURL Notification System
+SnapURL! Notification System
         `,
         replyTo: email,
     };
@@ -31,6 +31,7 @@ SnapURL Notification System
         return info;
     } catch (error) {
         console.error("Email sending failed:", error);
+        throw new Error("Email sending failed");
     }
 };
 
