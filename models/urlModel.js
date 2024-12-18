@@ -1,5 +1,5 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+import mongoose from "mongoose";
+import { Schema } from "mongoose";
 
 // Schema for storing URL data
 const urlSchema = new Schema({
@@ -25,6 +25,6 @@ const urlSchema = new Schema({
 urlSchema.index({ originalUrl: 1 });
 urlSchema.index({ shortenUrl: 1 });
 
-const Url = mongoose.model('Url', urlSchema);
+const Url = mongoose.model("Url", urlSchema);
 
-module.exports = Url;
+export default Url;

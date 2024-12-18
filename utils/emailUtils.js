@@ -1,4 +1,4 @@
-const transporter = require('../config/emailConfig');
+import transporter from "../config/emailConfig.js";
 
 // Function to send an email using the contact form
 const sendEmail = async (name, email, message) => {
@@ -35,4 +35,4 @@ SnapURL! Notification System
     }
 };
 
-module.exports = sendEmail;
+export default sendEmail;

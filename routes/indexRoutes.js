@@ -1,7 +1,7 @@
-const express = require('express');
+import express from "express";
 const router = express.Router();
 
-const indexController = require('../controllers/indexController');
+import indexController from "../controllers/indexController.js";
 
 router.get('/', indexController.getHome);
 router.get('/about', indexController.getAbout);
@@ -13,4 +13,4 @@ router.get('/:shortId', indexController.redirectToOriginalUrl);
 
 router.post('/contact/send-email', indexController.emailLimiter, indexController.processSendEmail);
 
-module.exports = router;
+export default router;

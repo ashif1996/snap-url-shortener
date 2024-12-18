@@ -1,5 +1,5 @@
 // Define and export an object containing HTTP status codes
-const HttpStatusCodes = {
+const httpStatusCodes = {
     OK: 200,
     CREATED: 201,
     NO_CONTENT: 204,
@@ -11,4 +11,4 @@ const HttpStatusCodes = {
     INTERNAL_SERVER_ERROR: 500,
   };
   
-  module.exports = HttpStatusCodes;
+  export default httpStatusCodes;

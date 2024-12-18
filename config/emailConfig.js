@@ -1,4 +1,7 @@
-const nodemailer = require('nodemailer');
+import dotenv from "dotenv";
+dotenv.config();
+
+import nodemailer from "nodemailer";
 
 // Create a transporter object using Gmail SMTP service
 const transporter = nodemailer.createTransport({
@@ -9,4 +12,4 @@ const transporter = nodemailer.createTransport({
     },
 });
 
-module.exports = transporter;
+export default transporter;

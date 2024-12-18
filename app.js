@@ -1,16 +1,18 @@
 // Load environment variables
-require('dotenv').config();
+import dotenv from "dotenv";
+dotenv.config();
 
 // Connect to the database
-const connectToDatabase = require('./config/dbConfig');
+import connectToDatabase from "./config/dbConfig.js";
 connectToDatabase();
 
-const path = require('path');
-const express = require('express');
-const session = require('express-session');
-const nocache = require('nocache');
-const expressLayouts = require('express-ejs-layouts');
-const flash = require('connect-flash');
+import path from "path";
+import { fileURLToPath } from "url";
+import express from "express";
+import session from "express-session";
+import nocache from "nocache";
+import expressLayouts from "express-ejs-layouts";
+import flash from "connect-flash";
 
 const app = express();
 
@@ -24,6 +26,10 @@ app.use(session({
     cookie: { secure: false },
 }));
 app.use(flash());
+
+// Get the directory of the current file (app.js)
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(expressLayouts);
 app.set('views', path.join(__dirname, 'views'));
@@ -31,7 +37,7 @@ app.set('view engine', 'ejs');
 app.use(nocache());
 
 // Routes
-const indexRoutes = require('./routes/indexRoutes');
+import indexRoutes from "./routes/indexRoutes.js";
 app.use('/', indexRoutes);
 
 // Error Handlers (404, 500)
@@ -58,4 +64,4 @@ app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
 
-module.exports = app;
+export default app;

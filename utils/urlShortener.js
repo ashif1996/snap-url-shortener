@@ -1,5 +1,5 @@
-const crypto = require('crypto');
-const Url = require('../models/urlModel');
+import crypto from "crypto";
+import Url from "../models/urlModel.js";
 
 // Function to generate a unique shortened URL
 const generateShortenedUrl = async (req) => {
@@ -22,4 +22,4 @@ const generateShortenedUrl = async (req) => {
     }
 };
 
-module.exports = generateShortenedUrl;
+export default generateShortenedUrl;
