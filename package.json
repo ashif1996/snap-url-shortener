@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "A simple URL shortener app built with Node.js, Express, and MongoDB.",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "start": "node app.js",
     "dev": "nodemon app.js",
