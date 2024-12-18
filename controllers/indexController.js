@@ -1,18 +1,19 @@
 // Rate limit
-const rateLimit = require("express-rate-limit");
+import rateLimit from "express-rate-limit";
 
 // Model
-const Url = require('../models/urlModel');
+import Url from "../models/urlModel.js";
 
 // Helpers
-const HttpStatusCodes = require('../utils/httpStatusCodes.js');
-const generateShortenedUrl = require('../utils/urlShortener.js');
-const sendEmail = require('../utils/emailUtils');
+import httpStatusCodes from "../utils/httpStatusCodes.js";
+import sendResponse from "../utils/responseUtils.js";
+import generateShortenedUrl from "../utils/urlShortener.js";
+import sendEmail from "../utils/emailUtils.js";
 
 // Renders the home page
 const getHome = (req, res) => {
     const locals = { title: "Home | SnapURL!" };
-    return res.status(HttpStatusCodes.OK).render("index", {
+    return res.status(httpStatusCodes.OK).render("index", {
         locals,
         layout: "layout/mainLayout",
     });
@@ -21,7 +22,7 @@ const getHome = (req, res) => {
 // Renders the about page
 const getAbout = (req, res) => {
     const locals = { title: "About Us | SnapURL!" };
-    return res.status(HttpStatusCodes.OK).render("about", {
+    return res.status(httpStatusCodes.OK).render("about", {
         locals,
         layout: "layout/mainLayout",
     });
@@ -30,7 +31,7 @@ const getAbout = (req, res) => {
 // Renders the contact page
 const getContact = (req, res) => {
     const locals = { title: "Contact Us | SnapURL!" };
-    return res.status(HttpStatusCodes.OK).render("contact", {
+    return res.status(httpStatusCodes.OK).render("contact", {
         locals,
         layout: "layout/mainLayout",
     });
@@ -50,37 +51,35 @@ const shortenUrl = async (req, res) => {
                 req.session.shortenedUrl = existingUrl.shortenedUrl;
             }
 
-            return res.status(HttpStatusCodes.OK).json({
+            return sendResponse(res, {
+                statusCode: httpStatusCodes.OK,
                 success: true,
-                message: 'The URL you provided is already shortened. Click OK button to see the shortened URL.',
-                shortenedUrl: existingUrl.shortenedUrl,
+                message: "The URL you provided is already shortened. Click OK button to see the shortened URL.",
             });
         }
 
         const shortenedUrl = await generateShortenedUrl(req);
 
-        const newShortenedUrl = new Url({
+        await Url.create({
             originalUrl,
             shortenedUrl,
             createdAt: new Date(),
             expiresAt: null,
         });
 
-        await newShortenedUrl.save();
-
         req.session.shortenedUrl = shortenedUrl;
 
-        return res.status(HttpStatusCodes.CREATED).json({
+        return sendResponse(res, {
+            statusCode: httpStatusCodes.CREATED,
             success: true,
-            message: 'URL successfully shortened. Click OK button to see the shortened URL.',
-            shortenedUrl,
+            message: "URL successfully shortened. Click OK button to see the shortened URL.",
         });
     } catch (error) {
-        console.error('Error shortening the URL:', error);
+        console.error("Error shortening the URL:", error);
 
-        return res.status(HttpStatusCodes.INTERNAL_SERVER_ERROR).json({
-            success: false,
-            message: 'Internal server error. Please try again later.',
+        return sendResponse(res, {
+            statusCode: httpStatusCodes.INTERNAL_SERVER_ERROR,
+            message: "An error occurred. Please try again later.",
         });
     }
 };
@@ -94,7 +93,7 @@ const getShortenedUrl = (req, res) => {
         shortenedUrl: shortenedUrl ? shortenedUrl : null,
     };
 
-    return res.status(HttpStatusCodes.OK).render("result", {
+    return res.status(httpStatusCodes.OK).render("result", {
         locals,
         layout: "layout/mainLayout",
     });
@@ -110,10 +109,10 @@ const redirectToOriginalUrl = async (req, res) => {
             .lean();
 
         if (shortenedurl) {
-            return res.redirect(HttpStatusCodes.MOVED_PERMANENTLY, shortenedurl.originalUrl);
+            return res.status(httpStatusCodes.MOVED_PERMANENTLY).redirect(shortenedurl.originalUrl);
         }
     } catch (error) {
-        console.error('Error during URL redirection:', error);
+        console.error("Error during URL redirection:", error);
         throw new Error("An error occured during URL redirection");
     }
 };
@@ -132,21 +131,22 @@ const processSendEmail = async (req, res) => {
     try {
         await sendEmail(name, email, message);
 
-        return res.status(HttpStatusCodes.OK).json({
+        return sendResponse(res, {
+            statusCode: httpStatusCodes.OK,
             success: true,
-            message: "Email sent successfully!",
-        })
+            message: "Email sent successfully.",
+        });
     } catch (error) {
         console.error("Failed to send email:", error);
 
-        return res.status(HttpStatusCodes.INTERNAL_SERVER_ERROR).json({
-            success: false,
-            message: 'Failed to send email.',
+        return sendResponse(res, {
+            statusCode: httpStatusCodes.INTERNAL_SERVER_ERROR,
+            message: "An error occurred. Please try again later.",
         });
     }
 };
 
-module.exports ={
+export default {
     getHome,
     getAbout,
     getContact,
