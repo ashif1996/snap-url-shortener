@@ -121,12 +121,9 @@ snap-url-shortener/
 
 1. **Home Page**  
    - Enter a long URL to get a shortened version.  
-   - Copy or share the shortened URL directly.  
+   - Copy or share the shortened URL directly.   
 
-2. **Custom Alias**  
-   - Add a custom alias to personalize your short URL.  
-
-3. **Error Pages**  
+2. **Error Pages**  
    - Encounter custom error pages for 404 or internal server issues.  
 
 ## 🧪 Load Testing  
